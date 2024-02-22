@@ -4,7 +4,7 @@
 instalar_tigervnc_gnome() {
     # Instalar TigerVNC y el entorno de escritorio GNOME
     sudo apt update
-    sudo apt install -y tigervnc-standalone-server tigervnc-common tigervnc-xorg-extension tigervnc-viewer ubuntu-desktop
+    sudo apt install -y tigervnc-standalone-server tigervnc-common tigervnc-xorg-extension tigervnc-viewer ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
 
     # Establecer la contraseña "changeme" para el usuario actual
     echo "changeme" | vncpasswd -f > ~/.vnc/passwd
@@ -15,6 +15,25 @@ instalar_tigervnc_gnome() {
 geometry=1920x1080
 localhost=no
 EOF
+
+    # Configurar el archivo xstartup para iniciar GNOME
+    cat <<EOF > ~/.vnc/xstartup
+#!/bin/sh
+export XKL_XMODMAP_DISABLE=1
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+xsetroot -solid grey
+
+gnome-panel &
+gnome-settings-daemon &
+metacity &
+nautilus &
+gnome-terminal &
+EOF
+    chmod +x ~/.vnc/xstartup
 
     # Reiniciar el servicio de TigerVNC
     vncserver -kill :1
