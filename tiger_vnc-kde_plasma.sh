@@ -4,7 +4,8 @@
 instalar_tigervnc_kde() {
     # Instalar TigerVNC y KDE
     sudo apt update
-    sudo apt install -y tigervnc-standalone-server tigervnc-common tigervnc-xorg-extension tigervnc-viewer kde-plasma-desktop
+    sudo apt install -y tigervnc-standalone-server tigervnc-common tigervnc-xorg-extension tigervnc-viewer
+    sudo tasksel install kubuntu-desktop
 
     # Establecer la contraseña "changeme" para el usuario actual
     echo "changeme" | vncpasswd -f > ~/.vnc/passwd
