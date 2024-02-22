@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Función para instalar y configurar TigerVNC con KDE
-instalar_tigervnc_kde() {
-    # Instalar TigerVNC y KDE
+# Función para instalar y configurar TigerVNC con el entorno de escritorio GNOME de Ubuntu
+instalar_tigervnc_gnome() {
+    # Instalar TigerVNC y el entorno de escritorio GNOME
     sudo apt update
-    sudo apt install -y tigervnc-standalone-server tigervnc-common tigervnc-xorg-extension tigervnc-viewer
-    sudo tasksel install kubuntu-desktop
+    sudo apt install -y tigervnc-standalone-server tigervnc-common tigervnc-xorg-extension tigervnc-viewer ubuntu-desktop
 
     # Establecer la contraseña "changeme" para el usuario actual
     echo "changeme" | vncpasswd -f > ~/.vnc/passwd
@@ -35,7 +34,7 @@ cerrar_sesiones_vnc() {
 # Mostrar el menú y ejecutar la opción seleccionada
 while true; do
     echo "Selecciona una opción:"
-    echo "1. Instalar y configurar TigerVNC con KDE"
+    echo "1. Instalar y configurar TigerVNC con el entorno de escritorio GNOME de Ubuntu"
     echo "2. Iniciar una sesión de VNC"
     echo "3. Cerrar las sesiones de VNC"
     echo "4. Salir"
@@ -43,7 +42,7 @@ while true; do
     read opcion
 
     case $opcion in
-        1) instalar_tigervnc_kde;;
+        1) instalar_tigervnc_gnome;;
         2) iniciar_sesion_vnc;;
         3) cerrar_sesiones_vnc;;
         4) exit;;
